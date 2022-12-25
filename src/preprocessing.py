@@ -2,10 +2,11 @@ import re
 import nltk
 import pandas as pd
 from nltk.stem.isri import ISRIStemmer
+from farasa.stemmer import FarasaStemmer
 
  
 ### Clean each tweet
-def clean_data(data):
+def clean_data(data,stemming=False):
     newList=[]
     for i, produto in data.iterrows():
         # remove the Links
@@ -57,15 +58,19 @@ def clean_data(data):
         newTweet=newTweet.split()
 
         # may not be necessary بتبوظ الكلام
-        # apply stemming
-        st = ISRIStemmer()
-        #newTweet=[st.stem(word) for word in newTweet]
         
         # remove stopwords
         stopwords_arabic = nltk.corpus.stopwords.words('arabic')
         newTweet=[word for word in newTweet if word not in stopwords_arabic]
         # join the words to form a sentence
         newTweet=' '.join(newTweet)
+
+        if stemming:
+            # apply stemming
+            # farasa stemmer take the whole array of words
+            stemmer = FarasaStemmer()
+            newTweet=stemmer.stem(newTweet)
+
         newList.append(newTweet)
     data['text']=newList
     return data
