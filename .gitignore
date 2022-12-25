@@ -1,2 +1,3 @@
 src/Word2VecSkipGram300D.bin
 model/*
+*.h1
