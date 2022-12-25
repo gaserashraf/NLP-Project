@@ -70,8 +70,11 @@ def clean_data(data,stemming=False):
             # farasa stemmer take the whole array of words
             stemmer = FarasaStemmer()
             newTweet=stemmer.stem(newTweet)
-
-        newList.append(newTweet)
+        # Check if the tweet is not empty
+        if newTweet:        
+            newList.append(newTweet)
+        else:
+            newList.append('فاضي')
     data['text']=newList
     return data
 
